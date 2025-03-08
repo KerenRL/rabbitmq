@@ -1,0 +1,45 @@
+.cita-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #F3F4F6;
+  }
+  
+  .cita-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .cita-card-header {
+    margin-bottom: 1rem;
+  }
+  
+  .cita-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #4B5563;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cita-card-info {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  
+  .cita-card-motivo {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .cita-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
