@@ -3,6 +3,7 @@ import CitaCard from '../../molecules/CitasCard/CitasCard';
 import Button from '../../atoms/Button/Button';
 import Modal from '../../molecules/Modal/Modal';
 import CitaForm from '../../molecules/CitasForm/CitasForm';
+import websocketService from '../../../services/websocketServices';
 import './CitasDashboard.css';
 
 interface Cita {
@@ -18,21 +19,35 @@ const CitasDashboard: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedCita, setSelectedCita] = useState<Cita | null>(null);
   const [modalType, setModalType] = useState<'create' | 'edit' | 'view'>('create');
+  const [notifications, setNotifications] = useState<string[]>([]);
 
   useEffect(() => {
     fetchCitas();
+
+    // Conectar al WebSocket
+    websocketService.connect('ws://localhost:8082/ws');
+
+    // Agregar listener para recibir notificaciones
+    const handleNotification = (message: string) => {
+      setNotifications((prev) => [...prev, message]);
+    };
+    websocketService.addListener(handleNotification);
+
+    // Limpiar el listener al desmontar el componente
+    return () => {
+      websocketService.removeListener(handleNotification);
+    };
   }, []);
 
   const fetchCitas = async () => {
     try {
       const response = await fetch('http://localhost:8080/citas');
       const data = await response.json();
-      console.log("Citas obtenidas:", data); // <--- Agrega este log
       setCitas(data);
     } catch (error) {
       console.error('Error al obtener citas:', error);
     }
-  };  
+  };
 
   const handleCreateCita = () => {
     setModalType('create');
@@ -128,6 +143,15 @@ const CitasDashboard: React.FC = () => {
             />
           </div>
         )}
+      </div>
+
+      <div className="notifications">
+        <h2>Notificaciones</h2>
+        <ul>
+          {notifications.map((notification, index) => (
+            <li key={index}>{notification}</li>
+          ))}
+        </ul>
       </div>
 
       <Modal
