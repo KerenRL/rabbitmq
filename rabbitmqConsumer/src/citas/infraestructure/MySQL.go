@@ -22,7 +22,7 @@ func NewMySQL() domain.ICitas {
 }
 
 func (mysql *MySQL) SaveCita(nombre string, fecha string, hora string, motivo string) error {
-	query := "INSERT INTO cita (nombre, fecha, hora, motivo) VALUES (?, ?, ?, ?)"
+	query := "INSERT INTO citaas (nombre, fecha, hora, motivo) VALUES (?, ?, ?, ?)"
 	result, err := mysql.conn.ExecutePreparedQuery(query, nombre, fecha, hora, motivo)
 	if err != nil {
 		return fmt.Errorf("Error al ejecutar la consulta: %v", err)
@@ -38,7 +38,7 @@ func (mysql *MySQL) SaveCita(nombre string, fecha string, hora string, motivo st
 }
 
 func (mysql *MySQL) GetAll() ([]domain.Cita, error) {
-	query := "SELECT * FROM cita"
+	query := "SELECT * FROM citaas"
 	rows, err := mysql.conn.FetchRows(query)
 	if err != nil {
 		return nil, fmt.Errorf("Error al ejecutar la consulta SELECT: %v", err)
@@ -62,7 +62,7 @@ func (mysql *MySQL) GetAll() ([]domain.Cita, error) {
 }
 
 func (mysql *MySQL) UpdateCita(id int32, nombre string, fecha string, hora string, motivo string) error {
-	query := "UPDATE cita SET nombre = ?, fecha = ?, hora = ?, motivo = ? WHERE id = ?"
+	query := "UPDATE citaas SET nombre = ?, fecha = ?, hora = ?, motivo = ? WHERE id = ?"
 	result, err := mysql.conn.ExecutePreparedQuery(query, nombre, fecha, hora, motivo, id)
 	if err != nil {
 		return fmt.Errorf("Error al ejecutar la consulta: %v", err)
@@ -78,7 +78,7 @@ func (mysql *MySQL) UpdateCita(id int32, nombre string, fecha string, hora strin
 }
 
 func (mysql *MySQL) DeleteCitas(id int32) error {
-	query := "DELETE FROM cita WHERE id = ?"
+	query := "DELETE FROM citaas WHERE id = ?"
 	result, err := mysql.conn.ExecutePreparedQuery(query, id)
 	if err != nil {
 		return fmt.Errorf("Error al ejecutar la consulta: %v", err)
